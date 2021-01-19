@@ -1,2 +1,5 @@
 # Last kmsg
 type proc_last_kmsg, fs_type, proc_type;
+
+# CDSP
+type vendor_sysfs_boot_cdsp, sysfs_type, fs_type;
