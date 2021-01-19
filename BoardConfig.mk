@@ -64,6 +64,10 @@ TARGET_KERNEL_CLANG_COMPILE := true
 TARGET_KERNEL_CONFIG := vendor/davinci-perf_defconfig
 TARGET_KERNEL_SOURCE := kernel/xiaomi/davinci
 
+# Kernel modules - WLAN
+TARGET_MODULE_ALIASES += \
+    wlan.ko:qca_cld3_wlan.ko
+
 # Platform
 TARGET_BOARD_PLATFORM := sm6150
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno618
