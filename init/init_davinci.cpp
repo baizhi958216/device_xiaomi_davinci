@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+#include <fstream>
+#include <cstdio>
+
 #include <android-base/logging.h>
 #include <android-base/properties.h>
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
@@ -31,6 +34,21 @@ void property_override(char const prop[], char const value[])
     else
         __system_property_add(prop, strlen(prop), value, strlen(value));
 }
+
+bool has_eb_panel()
+{
+    std::ifstream cmdline("/proc/cmdline");
+    std::string line;
+    bool ret = false;
+
+    std::getline(cmdline, line);
+    if (line.find("dsi_ss_fhd_eb_f10_cmd_display") != std::string::npos)
+        ret = true;
+
+    cmdline.close();
+    return ret;
+}
+
 void load_davinci_global() {
     property_override("ro.product.model", "Mi 9T");
     property_override("ro.build.product", "davinci");
@@ -69,4 +87,6 @@ void vendor_load_properties() {
     } else {
         LOG(ERROR) << __func__ << ": unexcepted region!";
     }
+
+    property_override("persist.has.eb_panel", has_eb_panel() ? "true" : "false");
 }
