@@ -24,6 +24,8 @@
 
 #include "vendor_init.h"
 
+using std::string;
+
 void property_override(char const prop[], char const value[])
 {
     prop_info *pi;
@@ -38,11 +40,11 @@ void property_override(char const prop[], char const value[])
 bool has_eb_panel()
 {
     std::ifstream cmdline("/proc/cmdline");
-    std::string line;
+    string line;
     bool ret = false;
 
     std::getline(cmdline, line);
-    if (line.find("dsi_ss_fhd_eb_f10_cmd_display") != std::string::npos)
+    if (line.find("dsi_ss_fhd_eb_f10_cmd_display") != string::npos)
         ret = true;
 
     cmdline.close();
@@ -76,13 +78,13 @@ void load_davinci_china() {
 }
 
 void vendor_load_properties() {
-    std::string region = android::base::GetProperty("ro.boot.hwc", "");
+    string region = android::base::GetProperty("ro.boot.hwc", "");
 
-    if (region.find("GLOBAL") != std::string::npos) {
+    if (region.find("GLOBAL") != string::npos) {
         load_davinci_global();
-    } else if (region.find("INDIA") != std::string::npos) {
+    } else if (region.find("INDIA") != string::npos) {
         load_davinciin();
-    } else if (region.find("CN") != std::string::npos) {
+    } else if (region.find("CN") != string::npos) {
         load_davinci_china();
     } else {
         LOG(ERROR) << __func__ << ": unexcepted region!";
